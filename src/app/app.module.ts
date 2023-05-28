@@ -4,6 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataComponent } from './data/data.component';
+import {MatButtonModule} from "@angular/material/button";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
@@ -12,7 +17,11 @@ import { DataComponent } from './data/data.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
