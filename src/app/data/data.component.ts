@@ -52,8 +52,8 @@ export class DataComponent implements OnInit{
   addStudent() {
     this.http.post('/', this.newStudent).subscribe(
       () => {
-        this.getAllStudents(); // Обновляем список студентов после добавления
-        this.resetForm(); // Сбрасываем значения формы
+        this.getAllStudents();
+        this.resetForm();
       },
       error => {
         console.error('Failed to add student:', error);
@@ -67,19 +67,21 @@ export class DataComponent implements OnInit{
       name: '',
       surname: '',
       age: 0,
-      averageGrade: 0
+      averageGrade: 0.0
     };
   }
   deleteStudent(id: number) {
     this.http.delete(`/${id}`).subscribe(
       () => {
-        this.getAllStudents(); // Refresh the student list after deletion
+        this.getAllStudents();
       },
       error => {
         console.error(`Failed to delete student with ID ${id}:`, error);
       }
     );
   }
+
+  protected readonly Math = Math;
 }
 
 interface Student {
@@ -89,4 +91,3 @@ interface Student {
   age: number;
   averageGrade: number;
 }
-

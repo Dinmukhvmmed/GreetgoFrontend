@@ -1,7 +1,7 @@
 <div>
   <h1>Список студентов</h1>
 
-  <table mat-table [dataSource]="students">
+  <table *ngIf="students.length > 0" mat-table [dataSource]="students">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Имя</th>
       <td mat-cell *matCellDef="let student">{{ student.name }}</td>
@@ -19,7 +19,12 @@
 
     <ng-container matColumnDef="averageGrade">
       <th mat-header-cell *matHeaderCellDef>Средняя оценка</th>
-      <td mat-cell *matCellDef="let student">{{ student.averageGrade }}</td>
+      <td mat-cell *matCellDef="let student">
+        <ng-container *ngIf="student.averageGrade !== 0; else defaultValue">
+          {{ Math.min(student.averageGrade, 5.0) | number: '1.1-1' }}
+        </ng-container>
+        <ng-template #defaultValue>0.0</ng-template>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
@@ -32,6 +37,8 @@
     <tr mat-header-row *matHeaderRowDef="['name', 'surname', 'age', 'averageGrade', 'actions']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['name', 'surname', 'age', 'averageGrade', 'actions']"></tr>
   </table>
+
+  <p *ngIf="students.length === 0">Нет студентов</p>
 
   <div>
     <mat-form-field>
