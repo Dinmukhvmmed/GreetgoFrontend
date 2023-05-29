@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -19,7 +20,7 @@ export class DataComponent implements OnInit {
     averageGrade: 0
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   ngOnInit() {
@@ -27,18 +28,22 @@ export class DataComponent implements OnInit {
   }
 
   getAllStudents() {
-    this.http.get<Student[]>('/').subscribe(
+    this.http.get<Student[]>('http://localhost:8080/').subscribe(
       response => {
         this.students = response;
       },
-      error => {
-        console.error('Failed to retrieve students:', error);
+      (error: HttpErrorResponse) => {
+        if (error.status === 302) {
+          this.router.navigate(['/login']);
+        } else {
+          console.error('Failed to retrieve students:', error);
+        }
       }
     );
   }
 
   getStudent(id: number) {
-    this.http.get<Student>(`/${id}`).subscribe(
+    this.http.get<Student>(`http://localhost:8080/${id}`).subscribe(
       response => {
         console.log('Student:', response);
       },
@@ -49,7 +54,7 @@ export class DataComponent implements OnInit {
   }
 
   addStudent() {
-    this.http.post('/', this.newStudent).subscribe(
+    this.http.post('http://localhost:8080/', this.newStudent).subscribe(
       () => {
         this.getAllStudents();
         this.resetForm();
@@ -71,7 +76,7 @@ export class DataComponent implements OnInit {
   }
 
   deleteStudent(id: number) {
-    this.http.delete(`/${id}`).subscribe(
+    this.http.delete(`http://localhost:8080/${id}`).subscribe(
       () => {
         this.getAllStudents();
       },
