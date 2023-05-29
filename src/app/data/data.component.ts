@@ -8,7 +8,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./data.component.css']
 })
 
-export class DataComponent implements OnInit{
+export class DataComponent implements OnInit {
   students: Student[] = [];
 
   newStudent: Student = {
@@ -48,7 +48,6 @@ export class DataComponent implements OnInit{
     );
   }
 
-
   addStudent() {
     this.http.post('/', this.newStudent).subscribe(
       () => {
@@ -70,6 +69,7 @@ export class DataComponent implements OnInit{
       averageGrade: 0.0
     };
   }
+
   deleteStudent(id: number) {
     this.http.delete(`/${id}`).subscribe(
       () => {
