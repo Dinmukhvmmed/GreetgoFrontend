@@ -33,11 +33,8 @@ export class DataComponent implements OnInit {
         this.students = response;
       },
       (error: HttpErrorResponse) => {
-        if (error.status === 302) {
-          this.router.navigate(['/login']);
-        } else {
-          console.error('Failed to retrieve students:', error);
-        }
+        this.router.navigate(['/login']);
+        console.error('Failed to retrieve students:', error);
       }
     );
   }
